@@ -24,8 +24,12 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.DirectionsRun
+import androidx.compose.material.icons.rounded.Edit
+import androidx.compose.material.icons.rounded.Image
 import androidx.compose.material.icons.rounded.Message
 import androidx.compose.material.icons.rounded.Phone
+import androidx.compose.material.icons.rounded.Publish
 import androidx.compose.material.icons.rounded.SelfImprovement
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -103,6 +107,7 @@ fun CardExample(
                 imageVector = Icons.Rounded.Message,
                 contentDescription = "triggers open message action",
                 modifier = iconModifier
+
             )
         },
         appName = { Text("Messages") },
@@ -115,6 +120,7 @@ fun CardExample(
 }
 
 // TODO: Create a Chip Composable
+@Preview
 @Composable
 fun ImportDataChip(
     modifier: Modifier = Modifier,
@@ -125,21 +131,21 @@ fun ImportDataChip(
         onClick = { /* ... */ },
         label = {
             Text(
-                text = "心拍データの取り込み",
+                text = "心拍データ取込",
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis
             )
         },
         icon = {
             Icon(
-                imageVector = Icons.Rounded.SelfImprovement,
+                imageVector = Icons.Rounded.Publish ,
                 contentDescription = "心拍データの取り込みボタン",
                 modifier = iconModifier
             )
         },
     )
 }
-
+@Preview
 @Composable
 fun RecordDataChip(
     modifier: Modifier = Modifier,
@@ -157,14 +163,14 @@ fun RecordDataChip(
         },
         icon = {
             Icon(
-                imageVector = Icons.Rounded.SelfImprovement,
+                imageVector = Icons.Rounded.Edit,
                 contentDescription = "運動の記録ボタン",
                 modifier = iconModifier
             )
         },
     )
 }
-
+@Preview
 @Composable
 fun UseFunctionChip(
     modifier: Modifier = Modifier,
@@ -182,7 +188,7 @@ fun UseFunctionChip(
         },
         icon = {
             Icon(
-                imageVector = Icons.Rounded.SelfImprovement,
+                imageVector = Icons.Rounded.DirectionsRun,
                 contentDescription = "振動機能の使用",
                 modifier = iconModifier
             )
