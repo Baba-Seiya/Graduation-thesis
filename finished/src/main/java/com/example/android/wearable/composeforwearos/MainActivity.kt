@@ -104,13 +104,13 @@ fun WearApp() {
             ) {
 
                 /* ******************* Part 1: Simple composables ******************* */
-                item { ButtonExample(contentModifier, iconModifier) }
                 item { TextExample(contentModifier) }
-                item { CardExample(contentModifier, iconModifier) }
 
                 /* ********************* Part 2: Wear unique composables ********************* */
-                item { ChipExample(contentModifier, iconModifier) }
-                item { ToggleChipExample(contentModifier) }
+                item { RecordDataChip(contentModifier, iconModifier) }
+                item { UseFunctionChip(contentModifier, iconModifier)}
+                item { ImportDataChip(contentModifier, iconModifier) }
+
             }
 
             // TODO (End): Create a Scaffold (Wear Version)

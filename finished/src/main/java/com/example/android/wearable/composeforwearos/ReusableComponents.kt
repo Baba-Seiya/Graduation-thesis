@@ -86,7 +86,7 @@ fun TextExample(modifier: Modifier = Modifier) {
         modifier = modifier,
         textAlign = TextAlign.Center,
         color = MaterialTheme.colors.primary,
-        text = stringResource(R.string.device_shape)
+        text = "Toggle Menu"
     )
 }
 
@@ -116,7 +116,7 @@ fun CardExample(
 
 // TODO: Create a Chip Composable
 @Composable
-fun ChipExample(
+fun ImportDataChip(
     modifier: Modifier = Modifier,
     iconModifier: Modifier = Modifier
 ) {
@@ -125,7 +125,7 @@ fun ChipExample(
         onClick = { /* ... */ },
         label = {
             Text(
-                text = "5 minute Meditation",
+                text = "心拍データの取り込み",
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis
             )
@@ -133,12 +133,64 @@ fun ChipExample(
         icon = {
             Icon(
                 imageVector = Icons.Rounded.SelfImprovement,
-                contentDescription = "triggers meditation action",
+                contentDescription = "心拍データの取り込みボタン",
                 modifier = iconModifier
             )
         },
     )
 }
+
+@Composable
+fun RecordDataChip(
+    modifier: Modifier = Modifier,
+    iconModifier: Modifier = Modifier
+) {
+    Chip(
+        modifier = modifier,
+        onClick = { /* ... */ },
+        label = {
+            Text(
+                text = "運動の記録",
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis
+            )
+        },
+        icon = {
+            Icon(
+                imageVector = Icons.Rounded.SelfImprovement,
+                contentDescription = "運動の記録ボタン",
+                modifier = iconModifier
+            )
+        },
+    )
+}
+
+@Composable
+fun UseFunctionChip(
+    modifier: Modifier = Modifier,
+    iconModifier: Modifier = Modifier
+) {
+    Chip(
+        modifier = modifier,
+        onClick = { /* ... */ },
+        label = {
+            Text(
+                text = "振動機能の使用",
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis
+            )
+        },
+        icon = {
+            Icon(
+                imageVector = Icons.Rounded.SelfImprovement,
+                contentDescription = "振動機能の使用",
+                modifier = iconModifier
+            )
+        },
+    )
+}
+
+
 
 // TODO: Create a ToggleChip Composable
 @Composable
@@ -261,7 +313,7 @@ fun CardExamplePreview() {
 @Composable
 fun ChipExamplePreview() {
     WearAppTheme {
-        ChipExample(
+        ImportDataChip(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(bottom = 8.dp),
