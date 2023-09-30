@@ -15,6 +15,7 @@
  */
 package com.example.android.wearable.composeforwearos
 
+import android.app.Activity
 import android.content.res.Configuration
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
@@ -46,6 +47,10 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
+import androidx.navigation.NavType
+import androidx.navigation.Navigation
+import androidx.navigation.navArgument
 import androidx.wear.compose.material.AppCard
 import androidx.wear.compose.material.Button
 import androidx.wear.compose.material.ButtonDefaults
@@ -55,6 +60,7 @@ import androidx.wear.compose.material.MaterialTheme
 import androidx.wear.compose.material.Switch
 import androidx.wear.compose.material.Text
 import androidx.wear.compose.material.ToggleChip
+import androidx.wear.compose.navigation.rememberSwipeDismissableNavController
 import com.example.android.wearable.composeforwearos.theme.WearAppTheme
 
 /* Contains individual Wear OS demo composables for the code lab. */
@@ -90,7 +96,17 @@ fun TextExample(modifier: Modifier = Modifier) {
         modifier = modifier,
         textAlign = TextAlign.Center,
         color = MaterialTheme.colors.primary,
-        text = "Toggle Menu"
+        text = "Main Menu"
+    )
+}
+
+@Composable
+fun TextRecordData(modifier: Modifier = Modifier) {
+    Text(
+        modifier = modifier,
+        textAlign = TextAlign.Center,
+        color = MaterialTheme.colors.primary,
+        text = "運動の記録"
     )
 }
 
@@ -145,15 +161,16 @@ fun ImportDataChip(
         },
     )
 }
-@Preview
+
 @Composable
 fun RecordDataChip(
     modifier: Modifier = Modifier,
-    iconModifier: Modifier = Modifier
+    iconModifier: Modifier = Modifier,
+    onNavigateToRecordDataApp: () -> Unit
 ) {
     Chip(
         modifier = modifier,
-        onClick = { /* ... */ },
+        onClick = onNavigateToRecordDataApp,
         label = {
             Text(
                 text = "運動の記録",

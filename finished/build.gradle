@@ -85,6 +85,9 @@ dependencies {
     // androidx.navigation:navigation-compose version), that is, uncomment the line below.
     // implementation "androidx.wear.compose:compose-navigation:$wear_compose_version"
 
+    // navigation の追加
+    def wear_compose_version = "1.2.0"
+    implementation "androidx.wear.compose:compose-navigation:$wear_compose_version"
     // Testing
     testImplementation "junit:junit:$junit_version"
     androidTestImplementation "androidx.test.ext:junit:$androidx_test_ext_junit_version"

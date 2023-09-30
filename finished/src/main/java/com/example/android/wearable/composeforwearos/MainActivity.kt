@@ -18,16 +18,23 @@ package com.example.android.wearable.composeforwearos
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.Phone
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import androidx.navigation.NavHostController
+import androidx.navigation.navArgument
 import androidx.wear.compose.foundation.lazy.AutoCenteringParams
 import androidx.wear.compose.material.PositionIndicator
 import androidx.wear.compose.material.Scaffold
@@ -36,9 +43,15 @@ import androidx.wear.compose.material.TimeText
 import androidx.wear.compose.material.Vignette
 import androidx.wear.compose.material.VignettePosition
 import androidx.wear.compose.foundation.lazy.rememberScalingLazyListState
+import androidx.wear.compose.material.Button
+import androidx.wear.compose.material.ButtonDefaults
+import androidx.wear.compose.material.Icon
 import androidx.wear.compose.material.scrollAway
+import androidx.wear.compose.navigation.SwipeDismissableNavHost
+import androidx.wear.compose.navigation.composable
 import androidx.wear.compose.ui.tooling.preview.WearPreviewDevices
 import com.example.android.wearable.composeforwearos.theme.WearAppTheme
+import androidx.wear.compose.navigation.rememberSwipeDismissableNavController
 
 /**
  * This code lab is meant to help existing Compose developers get up to speed quickly on
@@ -59,12 +72,34 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             WearApp()
+            }
         }
+}
+@Composable
+fun WearApp(){
+    WearAppTheme {
+        //TODO: NavControllerを作る
+        val navController = rememberSwipeDismissableNavController()
+
+        SwipeDismissableNavHost(
+            navController = navController,
+            startDestination = "main"
+        ) {
+            composable("main") {
+                MainApp {navController.navigate("rec")}
+            }
+            composable("rec"){
+                RecordDataApp()
+            }
+        }
+
+
     }
 }
 
+
 @Composable
-fun WearApp() {
+fun MainApp(toRecordDataApp:() -> Unit) {
     WearAppTheme {
         // TODO: Swap to ScalingLazyListState
         val listState = rememberScalingLazyListState()
@@ -84,8 +119,67 @@ fun WearApp() {
                 PositionIndicator(
                     scalingLazyListState = listState
                 )
-            }
+            },
+
+
         ) {
+
+            // Modifiers used by our Wear composables.
+            val contentModifier = Modifier
+                .fillMaxWidth()
+                .padding(bottom = 8.dp)
+            val iconModifier = Modifier
+                .size(24.dp)
+                .wrapContentSize(align = Alignment.Center)
+
+            /* *************************** Part 3: ScalingLazyColumn *************************** */
+            // TODO: Swap a ScalingLazyColumn (Wear's version of LazyColumn)
+            ScalingLazyColumn(
+                modifier = Modifier.fillMaxSize(),
+                autoCentering = AutoCenteringParams(itemIndex = 0),
+                state = listState
+
+            ) {
+                /* ******************* Part 1: Simple composables ******************* */
+                item { TextExample(contentModifier) }
+                /* ********************* Part 2: Wear unique composables ********************* */
+                item { RecordDataChip(contentModifier, iconModifier,onNavigateToRecordDataApp = {toRecordDataApp()})}
+                item { UseFunctionChip(contentModifier, iconModifier)}
+                item { ImportDataChip(contentModifier, iconModifier) }
+
+
+            }
+
+            // TODO (End): Create a Scaffold (Wear Version)
+        }
+    }
+}
+
+@Composable
+fun RecordDataApp() {
+    WearAppTheme {
+        // TODO: Swap to ScalingLazyListState
+        val listState = rememberScalingLazyListState()
+
+        /* *************************** Part 4: Wear OS Scaffold *************************** */
+        // TODO (Start): Create a Scaffold (Wear Version)
+        Scaffold(
+            timeText = {
+                TimeText(modifier = Modifier.scrollAway(listState))
+            },
+            vignette = {
+                // Only show a Vignette for scrollable screens. This code lab only has one screen,
+                // which is scrollable, so we show it all the time.
+                Vignette(vignettePosition = VignettePosition.TopAndBottom)
+            },
+            positionIndicator = {
+                PositionIndicator(
+                    scalingLazyListState = listState
+                )
+            },
+
+
+            ) {
 
             // Modifiers used by our Wear composables.
             val contentModifier = Modifier
@@ -104,10 +198,9 @@ fun WearApp() {
             ) {
 
                 /* ******************* Part 1: Simple composables ******************* */
-                item { TextExample(contentModifier) }
+                item { TextRecordData(contentModifier) }
 
                 /* ********************* Part 2: Wear unique composables ********************* */
-                item { RecordDataChip(contentModifier, iconModifier) }
                 item { UseFunctionChip(contentModifier, iconModifier)}
                 item { ImportDataChip(contentModifier, iconModifier) }
 
@@ -117,6 +210,7 @@ fun WearApp() {
         }
     }
 }
+
 
 @WearPreviewDevices
 @Composable
