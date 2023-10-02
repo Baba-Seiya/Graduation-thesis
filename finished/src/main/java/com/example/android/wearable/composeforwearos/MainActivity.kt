@@ -86,10 +86,20 @@ fun WearApp(){
             startDestination = "main"
         ) {
             composable("main") {
-                MainApp {navController.navigate("rec")}
+                MainApp (
+                    toRecordDataApp = {navController.navigate("rec")},
+                    toUseFunctionApp = {navController.navigate("use")},
+                    toImportHbDataApp = {navController.navigate("import")}
+                )
             }
             composable("rec"){
-                RecordDataApp()
+                SelectStrengthApp(0)
+            }
+            composable("use"){
+                SelectStrengthApp(1)
+            }
+            composable("import"){
+                ImportHbDataApp()
             }
         }
 
@@ -99,7 +109,10 @@ fun WearApp(){
 
 
 @Composable
-fun MainApp(toRecordDataApp:() -> Unit) {
+fun MainApp(
+    toRecordDataApp:() -> Unit,
+    toUseFunctionApp:() -> Unit,
+    toImportHbDataApp:() -> Unit) {
     WearAppTheme {
         // TODO: Swap to ScalingLazyListState
         val listState = rememberScalingLazyListState()
@@ -144,8 +157,8 @@ fun MainApp(toRecordDataApp:() -> Unit) {
                 item { TextExample(contentModifier) }
                 /* ********************* Part 2: Wear unique composables ********************* */
                 item { RecordDataChip(contentModifier, iconModifier,onNavigateToRecordDataApp = {toRecordDataApp()})}
-                item { UseFunctionChip(contentModifier, iconModifier)}
-                item { ImportDataChip(contentModifier, iconModifier) }
+                item { UseFunctionChip(contentModifier, iconModifier,onNavigateToUseFunctionApp = {toUseFunctionApp()})}
+                item { ImportHbDataChip(contentModifier, iconModifier,onNavigateToImportHbDataApp = {toImportHbDataApp()}) }
 
 
             }
@@ -155,61 +168,6 @@ fun MainApp(toRecordDataApp:() -> Unit) {
     }
 }
 
-@Composable
-fun RecordDataApp() {
-    WearAppTheme {
-        // TODO: Swap to ScalingLazyListState
-        val listState = rememberScalingLazyListState()
-
-        /* *************************** Part 4: Wear OS Scaffold *************************** */
-        // TODO (Start): Create a Scaffold (Wear Version)
-        Scaffold(
-            timeText = {
-                TimeText(modifier = Modifier.scrollAway(listState))
-            },
-            vignette = {
-                // Only show a Vignette for scrollable screens. This code lab only has one screen,
-                // which is scrollable, so we show it all the time.
-                Vignette(vignettePosition = VignettePosition.TopAndBottom)
-            },
-            positionIndicator = {
-                PositionIndicator(
-                    scalingLazyListState = listState
-                )
-            },
-
-
-            ) {
-
-            // Modifiers used by our Wear composables.
-            val contentModifier = Modifier
-                .fillMaxWidth()
-                .padding(bottom = 8.dp)
-            val iconModifier = Modifier
-                .size(24.dp)
-                .wrapContentSize(align = Alignment.Center)
-
-            /* *************************** Part 3: ScalingLazyColumn *************************** */
-            // TODO: Swap a ScalingLazyColumn (Wear's version of LazyColumn)
-            ScalingLazyColumn(
-                modifier = Modifier.fillMaxSize(),
-                autoCentering = AutoCenteringParams(itemIndex = 0),
-                state = listState
-            ) {
-
-                /* ******************* Part 1: Simple composables ******************* */
-                item { TextRecordData(contentModifier) }
-
-                /* ********************* Part 2: Wear unique composables ********************* */
-                item { UseFunctionChip(contentModifier, iconModifier)}
-                item { ImportDataChip(contentModifier, iconModifier) }
-
-            }
-
-            // TODO (End): Create a Scaffold (Wear Version)
-        }
-    }
-}
 
 
 @WearPreviewDevices

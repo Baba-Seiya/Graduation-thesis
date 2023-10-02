@@ -26,11 +26,13 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.DirectionsRun
+import androidx.compose.material.icons.rounded.DirectionsWalk
 import androidx.compose.material.icons.rounded.Edit
 import androidx.compose.material.icons.rounded.Image
 import androidx.compose.material.icons.rounded.Message
 import androidx.compose.material.icons.rounded.Phone
 import androidx.compose.material.icons.rounded.Publish
+import androidx.compose.material.icons.rounded.RecordVoiceOver
 import androidx.compose.material.icons.rounded.SelfImprovement
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -62,6 +64,7 @@ import androidx.wear.compose.material.Text
 import androidx.wear.compose.material.ToggleChip
 import androidx.wear.compose.navigation.rememberSwipeDismissableNavController
 import com.example.android.wearable.composeforwearos.theme.WearAppTheme
+import java.math.BigDecimal
 
 /* Contains individual Wear OS demo composables for the code lab. */
 
@@ -101,6 +104,25 @@ fun TextExample(modifier: Modifier = Modifier) {
 }
 
 @Composable
+fun TextSelectStrength(modifier: Modifier = Modifier,case: Int) {
+    if (case == 0){
+        Text(
+            modifier = modifier,
+            textAlign = TextAlign.Center,
+            color = MaterialTheme.colors.primary,
+            text = "運動の記録"
+        )
+    }else if(case == 1){
+        Text(
+            modifier = modifier,
+            textAlign = TextAlign.Center,
+            color = MaterialTheme.colors.primary,
+            text = "心拍機能の使用"
+        )
+
+    }
+}
+@Composable
 fun TextRecordData(modifier: Modifier = Modifier) {
     Text(
         modifier = modifier,
@@ -109,6 +131,16 @@ fun TextRecordData(modifier: Modifier = Modifier) {
         text = "運動の記録"
     )
 }
+@Composable
+fun TextImportData(modifier: Modifier = Modifier) {
+    Text(
+        modifier = modifier,
+        textAlign = TextAlign.Center,
+        color = MaterialTheme.colors.primary,
+        text = "心拍データの取り込み"
+    )
+}
+
 
 // TODO: Create a Card (specifically, an AppCard) Composable
 @Composable
@@ -134,17 +166,25 @@ fun CardExample(
         Text("On my way!")
     }
 }
-
-// TODO: Create a Chip Composable
-@Preview
 @Composable
-fun ImportDataChip(
+fun ChipExample(
     modifier: Modifier = Modifier,
     iconModifier: Modifier = Modifier
 ) {
+
+}
+
+// TODO: Create a Chip Composable
+
+@Composable
+fun ImportHbDataChip(
+    modifier: Modifier = Modifier,
+    iconModifier: Modifier = Modifier,
+    onNavigateToImportHbDataApp:() -> Unit
+) {
     Chip(
         modifier = modifier,
-        onClick = { /* ... */ },
+        onClick = onNavigateToImportHbDataApp,
         label = {
             Text(
                 text = "心拍データ取込",
@@ -187,15 +227,16 @@ fun RecordDataChip(
         },
     )
 }
-@Preview
+
 @Composable
 fun UseFunctionChip(
     modifier: Modifier = Modifier,
-    iconModifier: Modifier = Modifier
+    iconModifier: Modifier = Modifier,
+    onNavigateToUseFunctionApp:() -> Unit
 ) {
     Chip(
         modifier = modifier,
-        onClick = { /* ... */ },
+        onClick = onNavigateToUseFunctionApp,
         label = {
             Text(
                 text = "振動機能の使用",
@@ -212,7 +253,84 @@ fun UseFunctionChip(
         },
     )
 }
-
+@Composable
+fun BigChip(
+    modifier: Modifier = Modifier,
+    iconModifier: Modifier = Modifier,
+    onNavigate:() -> Unit,
+    case : Int
+) {
+    Chip(
+        modifier = modifier,
+        onClick = {},
+        label = {
+            Text(
+                text = "運動強度大",
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis
+            )
+        },
+        icon = {
+            Icon(
+                imageVector = Icons.Rounded.DirectionsRun,
+                contentDescription = "振動機能の使用",
+                modifier = iconModifier
+            )
+        },
+    )
+}
+@Composable
+fun MediumChip(
+    modifier: Modifier = Modifier,
+    iconModifier: Modifier = Modifier,
+    onNavigate:() -> Unit,
+    case: Int
+) {
+    Chip(
+        modifier = modifier,
+        onClick = { },
+        label = {
+            Text(
+                text = "運動強度中",
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis
+            )
+        },
+        icon = {
+            Icon(
+                imageVector = Icons.Rounded.DirectionsWalk,
+                contentDescription = "中",
+                modifier = iconModifier
+            )
+        },
+    )
+}
+@Composable
+fun SmallChip(
+    modifier: Modifier = Modifier,
+    iconModifier: Modifier = Modifier,
+    onNavigate:() -> Unit,
+    case: Int
+) {
+    Chip(
+        modifier = modifier,
+        onClick = { },
+        label = {
+            Text(
+                text = "運動強度小",
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis
+            )
+        },
+        icon = {
+            Icon(
+                imageVector = Icons.Rounded.RecordVoiceOver,
+                contentDescription = "小",
+                modifier = iconModifier
+            )
+        },
+    )
+}
 
 
 // TODO: Create a ToggleChip Composable
@@ -336,7 +454,7 @@ fun CardExamplePreview() {
 @Composable
 fun ChipExamplePreview() {
     WearAppTheme {
-        ImportDataChip(
+        ChipExample(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(bottom = 8.dp),
