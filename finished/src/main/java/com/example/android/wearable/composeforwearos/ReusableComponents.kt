@@ -91,7 +91,39 @@ fun ButtonExample(
         }
     }
 }
+@Composable
+fun StartButton(
+    modifier: Modifier = Modifier,
+    iconModifier: Modifier = Modifier,
+    case: Case,
+    strength:Case
+) {
+    var aikon =Icons.Rounded.DirectionsRun
 
+    if (strength == Case.BIG){
+        aikon= Icons.Rounded.DirectionsRun
+    }else if(strength == Case.MEDIUM){
+        aikon = Icons.Rounded.DirectionsWalk
+    }else if (strength == Case.SMALL){
+        aikon = Icons.Rounded.RecordVoiceOver
+    }
+    Row(
+        modifier = modifier,
+        horizontalArrangement = Arrangement.Center
+    ) {
+        // Button
+        Button(
+            modifier = Modifier.size(ButtonDefaults.LargeButtonSize),
+            onClick = { /* ... */ },
+        ) {
+            Icon(
+                imageVector = aikon,
+                contentDescription = "運動開始ボタン",
+                modifier = iconModifier
+            )
+        }
+    }
+}
 // TODO: Create a Text Composable
 @Composable
 fun TextExample(modifier: Modifier = Modifier) {
@@ -104,20 +136,49 @@ fun TextExample(modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun TextSelectStrength(modifier: Modifier = Modifier,case: Int) {
-    if (case == 0){
+fun TextSelectStrength(modifier: Modifier = Modifier,case: Case) {
+    if (case == com.example.android.wearable.composeforwearos.Case.REC){
         Text(
             modifier = modifier,
             textAlign = TextAlign.Center,
             color = MaterialTheme.colors.primary,
             text = "運動の記録"
         )
-    }else if(case == 1){
+    }else if(case == com.example.android.wearable.composeforwearos.Case.USE){
         Text(
             modifier = modifier,
             textAlign = TextAlign.Center,
             color = MaterialTheme.colors.primary,
             text = "心拍機能の使用"
+        )
+
+    }
+}
+@Composable
+fun TextStart(modifier: Modifier = Modifier,case: Case,strength:Case) {
+    var moji:String? = null
+
+    if (strength == Case.BIG){
+        moji= "運動強度“強”\n"
+    }else if(strength == Case.MEDIUM){
+        moji = "運動強度”中”\n"
+    }else if (strength == Case.SMALL){
+        moji = "運動強度”弱”\n"
+    }
+
+    if (case == Case.REC){
+        Text(
+            modifier = modifier,
+            textAlign = TextAlign.Center,
+            color = MaterialTheme.colors.primary,
+            text = "${moji}運動の記録を始めます"
+        )
+    }else if(case == Case.USE){
+        Text(
+            modifier = modifier,
+            textAlign = TextAlign.Center,
+            color = MaterialTheme.colors.primary,
+            text = "${moji}心拍機能の使用を開始します"
         )
 
     }
@@ -138,6 +199,15 @@ fun TextImportData(modifier: Modifier = Modifier) {
         textAlign = TextAlign.Center,
         color = MaterialTheme.colors.primary,
         text = "心拍データの取り込み"
+    )
+}
+@Composable
+fun TextFeedBack(modifier: Modifier = Modifier) {
+    Text(
+        modifier = modifier,
+        textAlign = TextAlign.Center,
+        color = MaterialTheme.colors.primary,
+        text = "フィードバック"
     )
 }
 
@@ -258,11 +328,11 @@ fun BigChip(
     modifier: Modifier = Modifier,
     iconModifier: Modifier = Modifier,
     onNavigate:() -> Unit,
-    case : Int
+    case : Case
 ) {
     Chip(
         modifier = modifier,
-        onClick = {},
+        onClick = onNavigate,
         label = {
             Text(
                 text = "運動強度大",
@@ -284,11 +354,11 @@ fun MediumChip(
     modifier: Modifier = Modifier,
     iconModifier: Modifier = Modifier,
     onNavigate:() -> Unit,
-    case: Int
+    case: Case
 ) {
     Chip(
         modifier = modifier,
-        onClick = { },
+        onClick = onNavigate,
         label = {
             Text(
                 text = "運動強度中",
@@ -310,11 +380,11 @@ fun SmallChip(
     modifier: Modifier = Modifier,
     iconModifier: Modifier = Modifier,
     onNavigate:() -> Unit,
-    case: Int
+    case: Case
 ) {
     Chip(
         modifier = modifier,
-        onClick = { },
+        onClick = onNavigate,
         label = {
             Text(
                 text = "運動強度小",

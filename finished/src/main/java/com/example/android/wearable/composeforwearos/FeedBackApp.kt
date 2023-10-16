@@ -21,16 +21,7 @@ import androidx.wear.compose.material.scrollAway
 import com.example.android.wearable.composeforwearos.theme.WearAppTheme
 
 @Composable
-fun SelectStrengthApp(
-    case: Case, //0:運動の記録　1:振動機能の使用
-    toStartButtonAppCaseRecB:() -> Unit = {},
-    toStartButtonAppCaseRecM:() -> Unit = {},
-    toStartButtonAppCaseRecS:() -> Unit = {},
-    toStartButtonAppCaseUseB:() -> Unit = {},
-    toStartButtonAppCaseUseM:() -> Unit = {},
-    toStartButtonAppCaseUseS:() -> Unit = {},
-
-) {
+fun FeedBackApp() {
     WearAppTheme {
         // TODO: Swap to ScalingLazyListState
         val listState = rememberScalingLazyListState()
@@ -72,18 +63,10 @@ fun SelectStrengthApp(
             ) {
 
                 /* ******************* Part 1: Simple composables ******************* */
+                item { TextFeedBack(contentModifier) }
 
-                if (case == Case.REC){
-                    item { TextSelectStrength(contentModifier,Case.REC) }
-                    item{ BigChip(contentModifier, iconModifier, {toStartButtonAppCaseRecB()},Case.REC) }
-                    item{ MediumChip(contentModifier, iconModifier, {toStartButtonAppCaseRecM()},  Case.REC)}
-                    item{ SmallChip(contentModifier, iconModifier, {toStartButtonAppCaseRecS()}, Case.REC)}
-                }else if(case == Case.USE){
-                    item { TextSelectStrength(contentModifier,Case.USE) }
-                    item{ BigChip(contentModifier, iconModifier, {toStartButtonAppCaseUseB()},Case.USE)}
-                    item{ MediumChip(contentModifier, iconModifier, {toStartButtonAppCaseUseM()}, Case.USE)}
-                    item{ SmallChip(contentModifier, iconModifier, {toStartButtonAppCaseUseS()}, Case.USE)}
-                }
+                /* ********************* Part 2: Wear unique composables ********************* */
+
 
             }
 

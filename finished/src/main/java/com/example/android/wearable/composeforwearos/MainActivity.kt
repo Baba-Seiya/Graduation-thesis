@@ -15,25 +15,21 @@
  */
 package com.example.android.wearable.composeforwearos
 
+import android.app.FragmentManager.BackStackEntry
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Phone
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
-import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.navArgument
 import androidx.wear.compose.foundation.lazy.AutoCenteringParams
 import androidx.wear.compose.material.PositionIndicator
@@ -43,9 +39,6 @@ import androidx.wear.compose.material.TimeText
 import androidx.wear.compose.material.Vignette
 import androidx.wear.compose.material.VignettePosition
 import androidx.wear.compose.foundation.lazy.rememberScalingLazyListState
-import androidx.wear.compose.material.Button
-import androidx.wear.compose.material.ButtonDefaults
-import androidx.wear.compose.material.Icon
 import androidx.wear.compose.material.scrollAway
 import androidx.wear.compose.navigation.SwipeDismissableNavHost
 import androidx.wear.compose.navigation.composable
@@ -75,6 +68,13 @@ class MainActivity : ComponentActivity() {
             }
         }
 }
+enum class Case{
+    USE,
+    REC,
+    BIG,
+    MEDIUM,
+    SMALL
+}
 @Composable
 fun WearApp(){
     WearAppTheme {
@@ -92,15 +92,46 @@ fun WearApp(){
                     toImportHbDataApp = {navController.navigate("import")}
                 )
             }
+            //TODO 画面遷移時の値の渡し方を考える。USE,REC時に２通り、大中小で合計６通りになってしまう為面倒
+            //case 0:運動の記録　1:振動機能の使用
             composable("rec"){
-                SelectStrengthApp(0)
+                SelectStrengthApp(Case.REC,
+                    toStartButtonAppCaseRecB =  {navController.navigate("startrecbig")},
+                    toStartButtonAppCaseRecM = {navController.navigate("startrecmedium")},
+                    toStartButtonAppCaseRecS = {navController.navigate("startrecsmall")}
+                )
+
             }
             composable("use"){
-                SelectStrengthApp(1)
+                SelectStrengthApp(Case.USE,
+                    toStartButtonAppCaseUseB =  {navController.navigate("startusebig")},
+                    toStartButtonAppCaseUseM = {navController.navigate("startusemedium")},
+                    toStartButtonAppCaseUseS = {navController.navigate("startusesmall")}
+                )
+
             }
             composable("import"){
                 ImportHbDataApp()
             }
+            composable("startrecbig"){
+                StartButtonApp(Case.REC,Case.BIG)
+            }
+            composable("startrecmedium"){
+                StartButtonApp(Case.REC,Case.MEDIUM)
+            }
+            composable("startrecsmall"){
+                StartButtonApp(Case.REC,Case.SMALL)
+            }
+            composable("startusebig"){
+                StartButtonApp(Case.USE,Case.BIG)
+            }
+            composable("startusemedium"){
+                StartButtonApp(Case.USE,Case.MEDIUM)
+            }
+            composable("startusesmall"){
+                StartButtonApp(Case.USE,Case.SMALL)
+            }
+
         }
 
 
