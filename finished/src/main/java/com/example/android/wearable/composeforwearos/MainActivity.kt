@@ -78,7 +78,7 @@ enum class Case{
 @Composable
 fun WearApp(){
     WearAppTheme {
-        //TODO: NavControllerを作る
+        //NavControllerを作る
         val navController = rememberSwipeDismissableNavController()
 
         SwipeDismissableNavHost(
@@ -145,11 +145,9 @@ fun MainApp(
     toUseFunctionApp:() -> Unit,
     toImportHbDataApp:() -> Unit) {
     WearAppTheme {
-        // TODO: Swap to ScalingLazyListState
         val listState = rememberScalingLazyListState()
 
         /* *************************** Part 4: Wear OS Scaffold *************************** */
-        // TODO (Start): Create a Scaffold (Wear Version)
         Scaffold(
             timeText = {
                 TimeText(modifier = Modifier.scrollAway(listState))
@@ -177,7 +175,6 @@ fun MainApp(
                 .wrapContentSize(align = Alignment.Center)
 
             /* *************************** Part 3: ScalingLazyColumn *************************** */
-            // TODO: Swap a ScalingLazyColumn (Wear's version of LazyColumn)
             ScalingLazyColumn(
                 modifier = Modifier.fillMaxSize(),
                 autoCentering = AutoCenteringParams(itemIndex = 0),
@@ -193,8 +190,6 @@ fun MainApp(
 
 
             }
-
-            // TODO (End): Create a Scaffold (Wear Version)
         }
     }
 }

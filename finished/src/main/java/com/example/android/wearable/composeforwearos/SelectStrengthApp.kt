@@ -32,11 +32,8 @@ fun SelectStrengthApp(
 
 ) {
     WearAppTheme {
-        // TODO: Swap to ScalingLazyListState
         val listState = rememberScalingLazyListState()
-
         /* *************************** Part 4: Wear OS Scaffold *************************** */
-        // TODO (Start): Create a Scaffold (Wear Version)
         Scaffold(
             timeText = {
                 TimeText(modifier = Modifier.scrollAway(listState))
@@ -64,7 +61,6 @@ fun SelectStrengthApp(
                 .wrapContentSize(align = Alignment.Center)
 
             /* *************************** Part 3: ScalingLazyColumn *************************** */
-            // TODO: Swap a ScalingLazyColumn (Wear's version of LazyColumn)
             ScalingLazyColumn(
                 modifier = Modifier.fillMaxSize(),
                 autoCentering = AutoCenteringParams(itemIndex = 0),
@@ -86,8 +82,6 @@ fun SelectStrengthApp(
                 }
 
             }
-
-            // TODO (End): Create a Scaffold (Wear Version)
         }
     }
 }

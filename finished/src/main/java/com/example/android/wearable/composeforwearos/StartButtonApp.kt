@@ -30,11 +30,9 @@ fun StartButtonApp(
     strength:Case
 ) {
     WearAppTheme {
-        // TODO: Swap to ScalingLazyListState
         val listState = rememberLazyListState()
 
         /* *************************** Part 4: Wear OS Scaffold *************************** */
-        // TODO (Start): Create a Scaffold (Wear Version)
         Scaffold (
             timeText = {TimeText(modifier = Modifier.scrollAway(listState))}
         ) {
@@ -47,7 +45,6 @@ fun StartButtonApp(
                 .wrapContentSize(align = Alignment.Center)
 
             /* *************************** Part 3: ScalingLazyColumn *************************** */
-            // TODO: Create a ScalingLazyColumn (Wear's version of LazyColumn)
             LazyColumn(
                 modifier = Modifier.fillMaxSize(),
                 contentPadding = PaddingValues(
@@ -71,8 +68,6 @@ fun StartButtonApp(
                 }
 
             }
-
-            // TODO (End): Create a Scaffold (Wear Version)
         }
     }
 }
